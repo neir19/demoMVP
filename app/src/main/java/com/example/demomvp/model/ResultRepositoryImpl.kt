@@ -35,7 +35,7 @@ class ResultRepositoryImpl(var resultPresenter: ResultPresenter):ResultRepositor
           })
     }
 
-    override fun Pagination(page: Int) {
+    override fun Pagination(page: Int,context: Context) {
         val api_key = "02e4b138dacaf8151088a361d6e75d01"
 
         retro
@@ -48,20 +48,21 @@ class ResultRepositoryImpl(var resultPresenter: ResultPresenter):ResultRepositor
                     if(response.isSuccessful){
 
                         resultPresenter.llenarList(response.body()?.results as List<ResultsItem>?)
+                        llenarTabla(context,resultPresenter.sendList())
 
                     }
                 }
             })
     }
 
-    override fun llenarTabla(context: Context) {
+     fun llenarTabla(context: Context,list:ArrayList<ResultsItem>) {
 
-        resultPresenter.tamanoList(resultPresenter.sendList().size)
+        resultPresenter.tamanoList(list.size)
         val db= DBOpenHelper.getInstance(context)
         var count: Int=0
         db?.use {
             select("Popular").exec {
-                for(item:ResultsItem in resultPresenter.sendList()){
+                for(item:ResultsItem in list){
                     if (this.count != 0) {
 
 

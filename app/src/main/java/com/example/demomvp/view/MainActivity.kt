@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity(),ResultView {
         progress.visibility=View.VISIBLE
         resultPresenter= ResultPesenterImpl(this)
         resultPresenter?.loadList()
-        llenarTabla(this)
+
 
 
 
@@ -64,12 +64,10 @@ class MainActivity : AppCompatActivity(),ResultView {
 
     override fun tamanoList(n: Int) {
 
-        Log.e("pagina","$n")
+        Log.e("tamañoList","$n")
     }
 
-    override fun llenarTabla(context: Context) {
-        resultPresenter?.llenarTabla(this)
-    }
+
 
     fun pagination(layout:GridLayoutManager ){
 
@@ -90,7 +88,7 @@ class MainActivity : AppCompatActivity(),ResultView {
                     }
                     if ((!isLoding) && ((totalItemCount - visibleItemCount) <= (pastVisibleItems + view_threshold))){
                         page++
-                        resultPresenter?.showPaginationResult(page)
+                        resultPresenter?.showPaginationResult(page,this@MainActivity)
                         isLoding= true
 
                     }
@@ -107,7 +105,7 @@ class MainActivity : AppCompatActivity(),ResultView {
         val db= DBOpenHelper.getInstance(this)
         db?.use {
             select("Popular").exec {
-                Log.e("tamaño", "${this.count}")
+                Log.e("tamañoSQlite", "${this.count}")
             }
         }
 

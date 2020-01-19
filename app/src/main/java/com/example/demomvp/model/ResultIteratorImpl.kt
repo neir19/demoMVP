@@ -9,11 +9,9 @@ class ResultIteratorImpl( var resultPresenter: ResultPresenter):ResultIterator {
        resultRepository.getResultsApi()
     }
 
-    override fun Pagination(page:Int) {
-        resultRepository.Pagination(page)
+    override fun Pagination(page:Int,context: Context) {
+        resultRepository.Pagination(page,context)
     }
 
-    override fun llenarTabla(context: Context) {
-        resultRepository.llenarTabla(context)
-    }
+
 }

@@ -21,9 +21,7 @@ class ResultPesenterImpl(var resultView: ResultView):ResultPresenter {
         return results
     }
 
-    override fun llenarTabla(context: Context) {
-       resultIterator.llenarTabla(context)
-    }
+
 
     override fun sendListView(results: List<ResultsItem>?) {
        resultView.showResults(results)
@@ -42,8 +40,8 @@ class ResultPesenterImpl(var resultView: ResultView):ResultPresenter {
 
     }
 
-    override fun showPaginationResult(page: Int) {
-        resultIterator.Pagination(page)
+    override fun showPaginationResult(page: Int, context: Context) {
+        resultIterator.Pagination(page, context)
     }
 
     override fun loadList() {

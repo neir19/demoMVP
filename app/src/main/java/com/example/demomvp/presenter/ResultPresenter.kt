@@ -8,8 +8,8 @@ interface ResultPresenter {
     fun loadList()
     fun ShowErrorLoadResult(messanje:String?)
     fun tamanoList(n: Int?)
-    fun showPaginationResult(page: Int)
+    fun showPaginationResult(page: Int,context: Context)
     fun llenarList(list: List<ResultsItem>?)
     fun sendList():ArrayList<ResultsItem>
-    fun llenarTabla(context: Context)
+
 }
