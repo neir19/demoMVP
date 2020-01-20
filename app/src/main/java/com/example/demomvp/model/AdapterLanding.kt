@@ -18,6 +18,9 @@ class AdapterLanding( val data: List<ResultsItem>):RecyclerView.Adapter<AdapterL
 
                 var Urll = "https://image.tmdb.org/t/p/w500"
                 Picasso.with(itemView.context).load(Urll+backdropPath).into(itemView.imgItem)
+                itemView.setOnClickListener {
+
+                }
             }
         }
     }

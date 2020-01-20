@@ -1,14 +1,19 @@
 package com.example.demomvp.presenter
 
 import android.content.Context
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.dbmkotlin.Model.ResultsItem
 import com.example.demomvp.model.ResultIterator
 import com.example.demomvp.model.ResultIteratorImpl
+import com.example.demomvp.model.ResultMovie
 import com.example.demomvp.view.ResultView
 
 class ResultPesenterImpl(var resultView: ResultView):ResultPresenter {
   private  var resultIterator:ResultIterator= ResultIteratorImpl(this)
   private var results= arrayListOf<ResultsItem>()
+    private var resultsSQlite= arrayListOf<ResultMovie>()
+
     override fun llenarList(List: List<ResultsItem>?){
         if (List != null) {
             for(i:ResultsItem in List){
@@ -21,6 +26,17 @@ class ResultPesenterImpl(var resultView: ResultView):ResultPresenter {
         return results
     }
 
+    override fun loadListSQLite(context: Context):List<ResultMovie> {
+        return resultIterator.loadResultSQlite(context)
+    }
+
+
+
+
+
+    override fun pagination(layout: GridLayoutManager,recyclerView: RecyclerView,context: Context) {
+        resultIterator.pagination(layout,recyclerView,context)
+    }
 
 
     override fun sendListView(results: List<ResultsItem>?) {
@@ -40,9 +56,6 @@ class ResultPesenterImpl(var resultView: ResultView):ResultPresenter {
 
     }
 
-    override fun showPaginationResult(page: Int, context: Context) {
-        resultIterator.Pagination(page, context)
-    }
 
     override fun loadList() {
         resultIterator.loadResult()

@@ -37,6 +37,7 @@ class ResultRepositoryImpl(var resultPresenter: ResultPresenter):ResultRepositor
 
     override fun Pagination(page: Int,context: Context) {
         val api_key = "02e4b138dacaf8151088a361d6e75d01"
+        resultPresenter.tamanoList(page)
 
         retro
             .getPopular(api_key, page)
@@ -55,9 +56,34 @@ class ResultRepositoryImpl(var resultPresenter: ResultPresenter):ResultRepositor
             })
     }
 
-     fun llenarTabla(context: Context,list:ArrayList<ResultsItem>) {
+    override fun getResultsSQlite(context: Context):ArrayList<ResultMovie> {
+    val db=DBOpenHelper.getInstance(context)
+        val list= arrayListOf<ResultMovie>()
+        db?.use {
+            select("Popular").exec {
 
-        resultPresenter.tamanoList(list.size)
+                if(this.count!=0){
+                    this.moveToFirst()
+                    do{
+                        list.add(ResultMovie(
+                            this.getInt(0),
+                            this.getString(1)?:"",
+                            this.getString(3)?:"",
+                            this.getString(2)?:"",
+                            this.getString(4)?:"",
+                            this.getDouble(5)))
+
+                    }while(this.moveToNext())
+                }
+            }
+        }
+
+        return  list
+    }
+
+    fun llenarTabla(context: Context,list:ArrayList<ResultsItem>) {
+
+
         val db= DBOpenHelper.getInstance(context)
         var count: Int=0
         db?.use {

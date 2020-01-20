@@ -1,6 +1,8 @@
 package com.example.demomvp.view
 
 import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -13,7 +15,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.dbmkotlin.Model.ResultsItem
 import com.example.demomvp.R
 import com.example.demomvp.model.AdapterLanding
+import com.example.demomvp.model.AdapterRM
 import com.example.demomvp.model.DBOpenHelper
+import com.example.demomvp.model.ResultMovie
 import com.example.demomvp.presenter.ResultPesenterImpl
 import com.example.demomvp.presenter.ResultPresenter
 import kotlinx.android.synthetic.main.activity_main.*
@@ -21,14 +25,8 @@ import org.jetbrains.anko.db.select
 
 class MainActivity : AppCompatActivity(),ResultView {
     private  var resultPresenter:ResultPresenter?=null
-    //pagination
-    private  var page=1
-    var isLoding: Boolean = true
-    var pastVisibleItems = 0
-    var visibleItemCount = 0
-    var totalItemCount = 0
-    var previus_total = 0
-    var view_threshold = 20
+    private  var  estado:Boolean=false
+
     val layout=GridLayoutManager(this, 2)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +34,13 @@ class MainActivity : AppCompatActivity(),ResultView {
         progress.visibility=View.VISIBLE
         resultPresenter= ResultPesenterImpl(this)
         resultPresenter?.loadList()
+
+        if(!estado){
+            recycler.layoutManager= layout
+            val adater= AdapterRM(resultPresenter?.loadListSQLite(this@MainActivity) as List<ResultMovie> )
+            recycler.adapter=adater
+            progress.visibility=View.GONE
+        }
 
 
 
@@ -48,10 +53,14 @@ class MainActivity : AppCompatActivity(),ResultView {
     override fun showResults(results: List<ResultsItem>?) {
 
         recycler.layoutManager= layout
-        val adapter= AdapterLanding(results  as List<ResultsItem>)
-        recycler.adapter= adapter
-        progress.visibility=View.GONE
-        pagination(layout)
+        if(estado){
+            val adapter= AdapterLanding(results  as List<ResultsItem>)
+            recycler.adapter= adapter
+            progress.visibility=View.GONE
+            resultPresenter?.pagination(layout,recycler,this)
+        }
+
+
 
 
     }
@@ -64,51 +73,37 @@ class MainActivity : AppCompatActivity(),ResultView {
 
     override fun tamanoList(n: Int) {
 
-        Log.e("tamañoList","$n")
+        Log.e("page","$n")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        estado=accessInternet()
     }
 
 
-
-    fun pagination(layout:GridLayoutManager ){
-
-        recycler.addOnScrollListener(object : RecyclerView.OnScrollListener(){
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                visibleItemCount=layout.childCount
-                totalItemCount= layout.itemCount
-                pastVisibleItems=layout.findFirstVisibleItemPosition()
-                if(dy>0){
-                    if(isLoding){
-                        if(totalItemCount>previus_total){
-                            isLoding=false
-                            previus_total=totalItemCount
-
-                        }
-
-                    }
-                    if ((!isLoding) && ((totalItemCount - visibleItemCount) <= (pastVisibleItems + view_threshold))){
-                        page++
-                        resultPresenter?.showPaginationResult(page,this@MainActivity)
-                        isLoding= true
-
-                    }
-                }
-
-            }
-
-        })
-
+    override fun onStart() {
+        super.onStart()
+        estado=accessInternet()
     }
 
     override fun onResume() {
         super.onResume()
+        estado=accessInternet()
+
         val db= DBOpenHelper.getInstance(this)
         db?.use {
             select("Popular").exec {
                 Log.e("tamañoSQlite", "${this.count}")
+
             }
         }
 
         }
+    private fun accessInternet(): Boolean {
+        val cm=this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo: NetworkInfo?=cm.activeNetworkInfo
+        return networkInfo!=null && networkInfo.isConnected
+    }
     }
 

@@ -7,4 +7,5 @@ interface ResultView {
     fun showResults(results: List<ResultsItem>?)
     fun showError(menssaje: String?)
     fun tamanoList(n: Int)
+
 }
