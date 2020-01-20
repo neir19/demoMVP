@@ -104,7 +104,7 @@ class ResultRepositoryImpl(var resultPresenter: ResultPresenter):ResultRepositor
 
                         if(count==0) {
                             val idPr = "id" to item.id
-                            val namePr = "titulo" to item.originalTitle
+                            val namePr = "titulo" to item.title
                             val yearPr = "año" to item.releaseDate
                             val descPr = "desc" to item.overview
                             val imgPr  ="img" to item.backdropPath
