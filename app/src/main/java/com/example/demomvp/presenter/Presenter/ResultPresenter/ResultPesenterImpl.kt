@@ -1,17 +1,20 @@
-package com.example.demomvp.presenter
+package com.example.demomvp.presenter.Presenter.ResultPresenter
 
 import android.content.Context
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dbmkotlin.Model.ResultsItem
-import com.example.demomvp.model.ResultIterator
-import com.example.demomvp.model.ResultIteratorImpl
-import com.example.demomvp.model.ResultMovie
+import com.example.demomvp.model.Result.ResultIterator
+import com.example.demomvp.model.Result.ResultIteratorImpl
+import com.example.demomvp.model.Result.ResultMovie
 import com.example.demomvp.view.ResultView
 
-class ResultPesenterImpl(var resultView: ResultView):ResultPresenter {
-  private  var resultIterator:ResultIterator= ResultIteratorImpl(this)
+class ResultPesenterImpl(var resultView: ResultView):
+    ResultPresenter {
+  private  var resultIterator: ResultIterator =
+      ResultIteratorImpl(this)
   private var results= arrayListOf<ResultsItem>()
+
     private var resultsSQlite= arrayListOf<ResultMovie>()
 
     override fun llenarList(List: List<ResultsItem>?){

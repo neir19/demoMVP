@@ -1,10 +1,10 @@
-package com.example.demomvp.presenter
+package com.example.demomvp.presenter.Presenter.ResultPresenter
 
 import android.content.Context
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dbmkotlin.Model.ResultsItem
-import com.example.demomvp.model.ResultMovie
+import com.example.demomvp.model.Result.ResultMovie
 
 interface ResultPresenter {
     fun sendListView(results:List<ResultsItem>?)
@@ -16,6 +16,7 @@ interface ResultPresenter {
     fun sendList():ArrayList<ResultsItem>
     fun loadListSQLite(context: Context):List<ResultMovie>
     fun pagination(layout: GridLayoutManager,recyclerView: RecyclerView,context: Context)
+
 
 
 }

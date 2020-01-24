@@ -1,4 +1,4 @@
-package com.example.demomvp.model
+package com.example.demomvp.model.Result
 
 import android.content.Context
 import androidx.recyclerview.widget.GridLayoutManager

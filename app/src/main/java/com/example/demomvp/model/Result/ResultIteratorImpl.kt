@@ -1,18 +1,20 @@
-package com.example.demomvp.model
+package com.example.demomvp.model.Result
 
 import android.content.Context
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.demomvp.presenter.ResultPresenter
-import com.example.demomvp.view.MainActivity
-import kotlinx.android.synthetic.main.activity_main.*
+import com.example.demomvp.presenter.Presenter.ResultPresenter.ResultPresenter
 
-class ResultIteratorImpl( var resultPresenter: ResultPresenter):ResultIterator {
+class ResultIteratorImpl( var resultPresenter: ResultPresenter):
+    ResultIterator {
     var page =1
-    var resultRepository:ResultRepository= ResultRepositoryImpl(resultPresenter)
+    var resultRepository: ResultRepository =
+        ResultRepositoryImpl(resultPresenter)
     override fun loadResult() {
        resultRepository.getResultsApi()
     }
+
+
 
 
     override fun loadResultSQlite(context: Context):List<ResultMovie> {

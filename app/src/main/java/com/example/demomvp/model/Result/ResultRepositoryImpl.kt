@@ -1,23 +1,24 @@
-package com.example.demomvp.model
+package com.example.demomvp.model.Result
 
 import android.content.Context
-import android.util.Log
 import com.example.dbmkotlin.Model.Movies
 import com.example.dbmkotlin.Model.ResultsItem
-import com.example.demomvp.presenter.ResultPresenter
+import com.example.demomvp.model.DBOpenHelper
+import com.example.demomvp.model.Endpoints
+import com.example.demomvp.presenter.Presenter.ResultPresenter.ResultPresenter
 import org.jetbrains.anko.db.insert
 import org.jetbrains.anko.db.select
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
-class ResultRepositoryImpl(var resultPresenter: ResultPresenter):ResultRepository {
+class ResultRepositoryImpl(var resultPresenter: ResultPresenter):
+    ResultRepository {
 
-    private  var retro=Endpoints.create()
+    private  var retro= Endpoints.create()
+    val api_key = "02e4b138dacaf8151088a361d6e75d01"
     override fun getResultsApi() {
-        val api_key = "02e4b138dacaf8151088a361d6e75d01"
+
 
 
         retro
@@ -36,7 +37,7 @@ class ResultRepositoryImpl(var resultPresenter: ResultPresenter):ResultRepositor
     }
 
     override fun Pagination(page: Int,context: Context) {
-        val api_key = "02e4b138dacaf8151088a361d6e75d01"
+
         resultPresenter.tamanoList(page)
 
         retro
@@ -57,7 +58,7 @@ class ResultRepositoryImpl(var resultPresenter: ResultPresenter):ResultRepositor
     }
 
     override fun getResultsSQlite(context: Context):ArrayList<ResultMovie> {
-    val db=DBOpenHelper.getInstance(context)
+    val db= DBOpenHelper.getInstance(context)
         val list= arrayListOf<ResultMovie>()
         db?.use {
             select("Popular").exec {
@@ -65,13 +66,16 @@ class ResultRepositoryImpl(var resultPresenter: ResultPresenter):ResultRepositor
                 if(this.count!=0){
                     this.moveToFirst()
                     do{
-                        list.add(ResultMovie(
-                            this.getInt(0),
-                            this.getString(1)?:"",
-                            this.getString(3)?:"",
-                            this.getString(2)?:"",
-                            this.getString(4)?:"",
-                            this.getDouble(5)))
+                        list.add(
+                            ResultMovie(
+                                this.getInt(0),
+                                this.getString(1) ?: "",
+                                this.getString(3) ?: "",
+                                this.getString(2) ?: "",
+                                this.getString(4) ?: "",
+                                this.getDouble(5)
+                            )
+                        )
 
                     }while(this.moveToNext())
                 }
@@ -81,10 +85,15 @@ class ResultRepositoryImpl(var resultPresenter: ResultPresenter):ResultRepositor
         return  list
     }
 
+
+
+
+
     fun llenarTabla(context: Context,list:ArrayList<ResultsItem>) {
 
 
-        val db= DBOpenHelper.getInstance(context)
+        val db=
+            DBOpenHelper.getInstance(context)
         var count: Int=0
         db?.use {
             select("Popular").exec {
