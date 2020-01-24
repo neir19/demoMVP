@@ -3,8 +3,10 @@ package com.example.demomvp.model.Result
 import android.content.Context
 import com.example.dbmkotlin.Model.Movies
 import com.example.dbmkotlin.Model.ResultsItem
-import com.example.demomvp.model.DBOpenHelper
+
 import com.example.demomvp.model.Endpoints
+import com.example.demomvp.model.SQLite.DBOpenHelper
+import com.example.demomvp.model.SQLite.ResultMovie
 import com.example.demomvp.presenter.Presenter.ResultPresenter.ResultPresenter
 import org.jetbrains.anko.db.insert
 import org.jetbrains.anko.db.select

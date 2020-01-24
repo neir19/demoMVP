@@ -6,7 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.dbmkotlin.Model.ResultsItem
 import com.example.demomvp.model.Result.ResultIterator
 import com.example.demomvp.model.Result.ResultIteratorImpl
-import com.example.demomvp.model.Result.ResultMovie
+import com.example.demomvp.model.SQLite.ResultMovie
+
 import com.example.demomvp.view.ResultView
 
 class ResultPesenterImpl(var resultView: ResultView):

@@ -7,13 +7,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.dbmkotlin.Model.ResultsItem
 import com.example.demomvp.R
 import com.example.demomvp.model.Result.AdapterLanding
-import com.example.demomvp.model.Result.AdapterRM
-import com.example.demomvp.model.DBOpenHelper
-import com.example.demomvp.model.Result.ResultMovie
+
+import com.example.demomvp.model.SQLite.AdapterRM
+import com.example.demomvp.model.SQLite.DBOpenHelper
+import com.example.demomvp.model.SQLite.ResultMovie
 import com.example.demomvp.presenter.Presenter.ResultPresenter.ResultPesenterImpl
 import com.example.demomvp.presenter.Presenter.ResultPresenter.ResultPresenter
 import kotlinx.android.synthetic.main.activity_main.*
@@ -28,6 +30,11 @@ class MainActivity : AppCompatActivity(),ResultView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         progress.visibility=View.VISIBLE
+        fbtnsearch.setOnClickListener {
+            val fm: FragmentManager= supportFragmentManager
+            val searchFragment=SearchFragment()
+            searchFragment.show(fm,"simple fragment")
+        }
         resultPresenter=
             ResultPesenterImpl(
                 this

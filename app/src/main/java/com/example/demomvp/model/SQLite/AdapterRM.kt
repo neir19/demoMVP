@@ -1,4 +1,4 @@
-package com.example.demomvp.model.Result
+package com.example.demomvp.model.SQLite
 
 import android.app.Activity
 import android.content.Intent

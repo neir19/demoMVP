@@ -1,7 +1,8 @@
 package com.example.demomvp.model.Result
 
 import android.content.Context
-import com.example.demomvp.model.Result.ResultMovie
+
+import com.example.demomvp.model.SQLite.ResultMovie
 
 interface ResultRepository{
    fun getResultsApi( )

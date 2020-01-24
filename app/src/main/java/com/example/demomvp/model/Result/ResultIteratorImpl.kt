@@ -3,6 +3,7 @@ package com.example.demomvp.model.Result
 import android.content.Context
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.demomvp.model.SQLite.ResultMovie
 import com.example.demomvp.presenter.Presenter.ResultPresenter.ResultPresenter
 
 class ResultIteratorImpl( var resultPresenter: ResultPresenter):

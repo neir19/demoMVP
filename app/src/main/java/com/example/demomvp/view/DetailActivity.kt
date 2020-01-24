@@ -31,6 +31,7 @@ class DetailActivity : AppCompatActivity(), TrailerView {
             id = it?.getInt("id")
             val imgg = it?.getString("imagen")
 
+
             txttitledetail.text = it?.getString("titulo")
             txtyeardetail.text = it?.getString("año")
             txtdescdetail.text = it?.getString("desc")

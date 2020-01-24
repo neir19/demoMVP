@@ -1,4 +1,4 @@
-package com.example.demomvp.model
+package com.example.demomvp.model.SQLite
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
@@ -35,5 +35,7 @@ class DBOpenHelper(ctx: Context): ManagedSQLiteOpenHelper(ctx,"MovieDB",null,1) 
         db?.dropTable("Popular",true)
     }
     val Context.database: DBOpenHelper?
-        get()= getInstance(applicationContext)
+        get()= getInstance(
+            applicationContext
+        )
 }
